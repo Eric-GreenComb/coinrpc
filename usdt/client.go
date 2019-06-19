@@ -81,7 +81,6 @@ func (o *OmniClient) ListTransactions(args ...interface{}) (result []Tx) {
 
 // 内存池中等待确认的omni交易清单
 func (o *OmniClient) GetPendingTransactions(address string) (result []Tx) {
-
 	c := rpc.NewClient(o.ConnCfg)
 
 	if err := c.Call(&result, "omni_listpendingtransactions", address); err != nil {
@@ -139,10 +138,10 @@ func (o *OmniClient) FundedSendall(fromaddress, toaddress string, ecosystem uint
 }
 
 
-func (o *OmniClient) GetBlockCount() int64 {
+func (o *OmniClient) GetBlockCount() uint64 {
 	c := rpc.NewClient(o.ConnCfg)
 
-	var count int64 = 0
+	var count uint64 = 0
 	if err := c.Call(&count, "getblockcount"); err != nil {
 		log.Printf("Call %v", err)
 	}
@@ -151,7 +150,7 @@ func (o *OmniClient) GetBlockCount() int64 {
 }
 
 // 列出指定区块内的所有omni交易ID
-func (o *OmniClient) GetBlockTransactions(index int64) (result []string) {
+func (o *OmniClient) GetBlockTransactions(index uint64) (result []string) {
 
 	c := rpc.NewClient(o.ConnCfg)
 
